@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-oviyumsnapwork-dev-221007-authRole",
+      "UnauthRoleArn": "arn:aws:iam::801547970177:role/amplify-oviyumsnapwork-dev-221007-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::801547970177:role/amplify-oviyumsnapwork-dev-221007-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-oviyumsnapwork-dev-221007-deployment",
+      "UnauthRoleName": "amplify-oviyumsnapwork-dev-221007-unauthRole",
+      "StackName": "amplify-oviyumsnapwork-dev-221007",
+      "StackId": "arn:aws:cloudformation:ap-south-1:801547970177:stack/amplify-oviyumsnapwork-dev-221007/1ae433e0-0f31-11ec-ab33-02265090c556",
+      "AmplifyAppId": "d3i9ex1x8vb9ve"
+    },
+    "categories": {
+      "auth": {
+        "OviyumSnapworker": {}
+      }
+    }
+  }
+}
