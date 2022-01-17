@@ -49,7 +49,9 @@ const Onboarding = (props) => {
         <TouchableOpacity
           style={GlobalStyles.button}
           activeOpacity={0.5}
-          onPress={() => {}}
+          onPress={() => {
+            props.navigation.navigate("SnapWorkerDiscovery");
+          }}
         >
           <Text
             style={{

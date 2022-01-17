@@ -23,6 +23,7 @@ const Colors = {
   mainText: "#2E3E5C",
   veryDarkBlue: "#0D253C",
   border: "#D0DBEA",
+  borderColor: "rgba(159, 165, 192,0.2)",
 };
 
 const Font = StyleSheet.create({
@@ -51,6 +52,14 @@ const Font = StyleSheet.create({
     letterSpacing: 2.9,
     lineHeight: 20,
     fontSize: 13,
+  },
+  button: {
+    fontFamily: "Inter-Bold",
+    fontSize: 15,
+    lineHeight: 18,
+    letterSpacing: 0.007,
+    textAlign: "center",
+    color: "white",
   },
 });
 

@@ -17,6 +17,8 @@ import { Feather } from "@expo/vector-icons";
 const Spaces = (props) => {
   const [people, setPeople] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchText, setSearchText] = useState("");
   useEffect(() => {
     const fetchPeople = async () => {
       await axios.get("https://api.tvmaze.com/people").then((response) => {
@@ -27,54 +29,79 @@ const Spaces = (props) => {
     };
     fetchPeople();
   }, []);
+
+  const handleSearch = (text) => {
+    const query = text.toLowerCase();
+    const result = people.filter((item) => {
+      if (item.name) {
+        return item.name.toLowerCase().indexOf(query) >= 0;
+      }
+    });
+    setFilteredData(result);
+  };
+
   return (
     <Container>
       <Header>
         {/* Icon */}
         <TouchableOpacity style={GlobalStyles.headerButton}>
-          <Image
+          {/* <Image
             source={require("../../assets/Back.png")}
             style={{
               height: 15,
               width: 15,
             }}
             resizeMode="contain"
-          />
+          /> */}
         </TouchableOpacity>
         <Text style={Font.headerText}>SPACES</Text>
         <View style={GlobalStyles.headerButton}></View>
       </Header>
       <FlatList
-        data={people.slice(0, 10)}
+        data={
+          searchText.length === 0
+            ? people.slice(0, 10)
+            : filteredData.slice(0, 5)
+        }
         keyExtractor={(item) => item.id}
+        ListEmptyComponent={() => {
+          return (
+            <Text style={{ ...Font.header, marginTop: 50 }}>
+              No such Space found
+            </Text>
+          );
+        }}
         style={{
           width: Sizes.width,
         }}
-        ListHeaderComponent={() => {
-          return (
+        ListHeaderComponent={
+          <View
+            style={{
+              paddingHorizontal: 30,
+              paddingTop: 18,
+            }}
+          >
             <View
               style={{
-                paddingHorizontal: 30,
-                paddingTop: 18,
+                ...GlobalStyles.InputView,
+                backgroundColor: "#F4F5F7",
+                borderWidth: 0,
               }}
             >
-              <View
-                style={{
-                  ...GlobalStyles.InputView,
-                  backgroundColor: "#F4F5F7",
-                  borderWidth: 0,
+              <Feather name="search" size={20} color={Colors.darkBlue} />
+              <TextInput
+                value={searchText}
+                onChangeText={(text) => {
+                  setSearchText(text);
+                  handleSearch(text);
                 }}
-              >
-                <Feather name="search" size={20} color={Colors.darkBlue} />
-                <TextInput
-                  placeholder="Search"
-                  placeholderTextColor={Colors.darkGrey}
-                  style={styles.input}
-                />
-              </View>
+                placeholder="Search"
+                placeholderTextColor={Colors.darkGrey}
+                style={styles.input}
+              />
             </View>
-          );
-        }}
+          </View>
+        }
         renderItem={({ item, i }) => {
           if (i < 10) {
             return null;

@@ -16,7 +16,13 @@ const Header = (props) => {
   );
 };
 
-export { Container, Header };
+const Section = (props) => {
+  return (
+    <View style={{ ...styles.section, ...props.style }}>{props.children}</View>
+  );
+};
+
+export { Container, Header, Section };
 
 const styles = StyleSheet.create({
   container: {
@@ -34,5 +40,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     elevation: 10,
     paddingHorizontal: 30,
+  },
+  section: {
+    backgroundColor: "white",
+    width: Sizes.width,
+    height: "100%",
+    paddingHorizontal: 35,
   },
 });

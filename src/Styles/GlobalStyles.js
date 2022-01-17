@@ -1,4 +1,4 @@
-import { Colors } from "../Styles/Constants";
+import { Colors, Font, Sizes } from "../Styles/Constants";
 
 export default GlobalStyles = {
   InputView: {
@@ -11,19 +11,54 @@ export default GlobalStyles = {
     paddingHorizontal: 25,
     borderColor: Colors.border,
   },
+  input: {
+    borderRadius: 32,
+    width: "100%",
+    height: 56,
+    borderWidth: 1,
+    paddingHorizontal: 25,
+    borderColor: Colors.border,
+    fontSize: 12,
+    color: Colors.darkGrey,
+    fontFamily: "DMSans-Regular",
+  },
   button: {
     width: "100%",
-    height: 55,
+    height: 56,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.green,
     borderRadius: 32,
-    marginTop: 30,
+    //     marginTop: 30,
   },
   headerButton: {
     height: 30,
     width: 30,
     justifyContent: "center",
     alignItems: "center",
+  },
+  discoveryQue: {
+    ...Font.text400,
+    color: "black",
+    textAlign: "left",
+    width: "100%",
+    marginTop: 15,
+    marginBottom: 20,
+  },
+  next: {
+    width: (Sizes.width - 80) / 2,
+    height: 56,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.green,
+    borderRadius: 32,
+  },
+  back: {
+    width: (Sizes.width - 80) / 2,
+    height: 56,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F4F5F7",
+    borderRadius: 32,
   },
 };

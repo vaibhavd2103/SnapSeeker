@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,17 +7,33 @@ import {
   Image,
   FlatList,
   TextInput,
+  Keyboard,
 } from "react-native";
 import { Container, Header } from "../Components/GlobalComponents";
 import { Font, Colors, Sizes } from "../Styles/Constants";
 import GlobalStyles from "../Styles/GlobalStyles";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 
 const SpacesChat = (props) => {
   const data = props.route.params;
   //   console.log(data);
+  const [keyboardStatus, setKeyboardStatus] = useState(false);
 
-  const messages = [
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+      setKeyboardStatus(true);
+    });
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+      setKeyboardStatus(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
+  const [messages, setMessages] = useState([
     {
       id: "1",
       user: "expert",
@@ -25,7 +41,7 @@ const SpacesChat = (props) => {
       time: "11:40am",
     },
     {
-      id: "5",
+      id: "11",
       user: "expert",
       message: "Tell us about your problem",
       time: "11:40am",
@@ -50,7 +66,62 @@ const SpacesChat = (props) => {
       message: "was added to App Design by you",
       time: "11:42am",
     },
-  ];
+    {
+      id: "5",
+      user: "currentUser",
+      message:
+        "I hope you have read the brief that was submitted to you. I would like to know what is your plan",
+      time: "11:41am",
+    },
+    {
+      id: "6",
+      user: "expert",
+      message:
+        "Sure, i understand the issues you have highlighted. Lets get on a call?",
+      time: "11:41am",
+    },
+    {
+      id: "7",
+      user: "currentUser",
+      message:
+        "I hope you have read the brief that was submitted to you. I would like to know what is your plan",
+      time: "11:41am",
+    },
+    {
+      id: "8",
+      user: "expert",
+      message:
+        "Sure, i understand the issues you have highlighted. Lets get on a call?",
+      time: "11:41am",
+    },
+    {
+      id: "9",
+      user: "currentUser",
+      message:
+        "I hope you have read the brief that was submitted to you. I would like to know what is your plan",
+      time: "11:41am",
+    },
+    {
+      id: "10",
+      user: "expert",
+      message:
+        "Sure, i understand the issues you have highlighted. Lets get on a call?",
+      time: "11:41am",
+    },
+  ]);
+
+  const [id, setId] = useState(Math.floor(Math.random() * 100 + 10));
+  const [userMessage, setUserMessage] = useState("");
+  const [time, setTime] = useState("11:43am");
+
+  const message = {
+    id: id,
+    message: userMessage,
+    time: time,
+    user: "currentUser",
+  };
+
+  let flatList = useRef(null);
 
   return (
     <Container>
@@ -90,7 +161,7 @@ const SpacesChat = (props) => {
         </View>
         <TouchableOpacity
           onPress={() => {
-            props.navigation.navigate("SpacesSetting", item);
+            props.navigation.navigate("SpacesSetting", data);
           }}
         >
           <Image
@@ -109,6 +180,9 @@ const SpacesChat = (props) => {
           height: "100%",
         }}
         data={messages}
+        ref={(ref) => (flatList = ref)}
+        onContentSizeChange={() => flatList.scrollToEnd()}
+        extraData={messages}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           if (item.user === "expert") {
@@ -231,6 +305,9 @@ const SpacesChat = (props) => {
             );
           }
         }}
+        ListFooterComponent={() => {
+          return <View style={{ height: 30 }}></View>;
+        }}
       />
       <View
         style={{
@@ -244,15 +321,31 @@ const SpacesChat = (props) => {
         <View style={{ ...GlobalStyles.InputView, width: Sizes.width - 150 }}>
           <AntDesign name="plus" size={20} color={Colors.darkBlue} />
           <TextInput
+            value={userMessage}
+            onChangeText={(text) => setUserMessage(text)}
             placeholder="Start Typing"
             placeholderTextColor={Colors.darkGrey}
             style={styles.input}
+            onFocus={() => flatList.scrollToEnd()}
           />
           <Feather name="mic" size={24} color={Colors.softRed} />
         </View>
-        <View style={styles.icon}>
-          <Feather name="phone" size={24} color={Colors.green} />
-        </View>
+        {keyboardStatus ? (
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => {
+              setId(Math.floor(Math.random() * 100 + 10));
+              messages.push(message);
+              setUserMessage("");
+            }}
+          >
+            <Ionicons name="send-outline" size={24} color={Colors.green} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.icon}>
+            <Feather name="phone" size={24} color={Colors.green} />
+          </TouchableOpacity>
+        )}
       </View>
     </Container>
   );

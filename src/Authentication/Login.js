@@ -126,7 +126,14 @@ const Login = (props) => {
             )}
           </TouchableOpacity>
         </View>
-        <View style={{ alignItems: "flex-end", width: "100%", marginTop: 10 }}>
+        <View
+          style={{
+            alignItems: "flex-end",
+            width: "100%",
+            marginTop: 10,
+            marginBottom: 40,
+          }}
+        >
           <Text style={{ ...Font.text400, color: Colors.mainText }}>
             Forgot Password?
           </Text>
